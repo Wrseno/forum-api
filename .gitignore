@@ -4,3 +4,4 @@ coverage
 package-lock.json
 config/database/test.json
 postman
+nginx.conf
