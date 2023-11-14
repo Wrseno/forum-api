@@ -1,3 +1,4 @@
+const RateLimiter = require("hapi-rate-limiter");
 const Hapi = require("@hapi/hapi");
 const Jwt = require("@hapi/jwt");
 
@@ -53,6 +54,15 @@ const createServer = async (container) => {
   });
 
   await server.register([
+    {
+      plugin: RateLimiter,
+      options: {
+        default: {
+          max: 90,
+          duration: 60000,
+        },
+      },
+    },
     {
       plugin: users,
       options: {container},

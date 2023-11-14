@@ -3,6 +3,14 @@ const routes = (handler) => [
     method: "GET",
     path: "/threads/{threadId}",
     handler: handler.getThreadByIdHandler,
+    options: {
+      plugins: {
+        rateLimit: {
+          enabled: true,
+          pathLimit: "/threads/{threadId}",
+        },
+      },
+    },
   },
   {
     method: "POST",
@@ -10,6 +18,12 @@ const routes = (handler) => [
     handler: handler.postThreadHandler,
     options: {
       auth: "forumapi_jwt",
+      plugins: {
+        rateLimit: {
+          enabled: true,
+          pathLimit: "/threads/{threadId}",
+        },
+      },
     },
   },
 ];
