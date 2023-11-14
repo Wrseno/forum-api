@@ -21,10 +21,14 @@
     "@hapi/jwt": "^2.0.1",
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
-    "hapi-rate-limiter": "^6.0.0",
+    "hapi-ralphi": "^3.2.0",
     "instances-container": "^2.0.6",
+    "ioredis": "^5.3.2",
     "nanoid": "^3.1.23",
-    "pg": "^8.6.0"
+    "pg": "^8.6.0",
+    "ralphi": "^3.2.0",
+    "ralphi-client": "^3.2.0",
+    "rate-limiter-flexible": "^3.0.4"
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",

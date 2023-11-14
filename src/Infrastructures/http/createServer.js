@@ -1,7 +1,7 @@
-const RateLimiter = require("hapi-rate-limiter");
+const {RateLimiterMemory} = require("rate-limiter-flexible");
+
 const Hapi = require("@hapi/hapi");
 const Jwt = require("@hapi/jwt");
-
 const ClientError = require("../../Commons/exceptions/ClientError");
 const DomainErrorTranslator = require("../../Commons/exceptions/DomainErrorTranslator");
 
@@ -55,15 +55,6 @@ const createServer = async (container) => {
 
   await server.register([
     {
-      plugin: RateLimiter,
-      options: {
-        default: {
-          max: 90,
-          duration: 60000,
-        },
-      },
-    },
-    {
       plugin: users,
       options: {container},
     },
@@ -88,6 +79,34 @@ const createServer = async (container) => {
       options: {container},
     },
   ]);
+
+  // options untuk penerapan rate limit
+  const opts = {
+    points: 90,
+    duration: 60,
+    blockDuration: 60,
+  };
+
+  const rateLimiter = new RateLimiterMemory(opts);
+
+  server.ext("onPreHandler", async (request, h) => {
+    const key = request.path; // Gunakan path sebagai kunci pembatasan
+
+    try {
+      const result = await rateLimiter.consume(key, 1);
+      if (result.remainingPoints >= 0) {
+        return h.continue;
+      } else {
+        return h
+          .response({status: "fail", message: "Too Many Requests"})
+          .code(429);
+      }
+    } catch (err) {
+      return h
+        .response({status: "fail", message: "Internal Server Error"})
+        .code(500);
+    }
+  });
 
   server.ext("onPreResponse", (request, h) => {
     // mendapatkan konteks response dari request

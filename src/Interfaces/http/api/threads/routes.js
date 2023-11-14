@@ -7,7 +7,6 @@ const routes = (handler) => [
       plugins: {
         rateLimit: {
           enabled: true,
-          pathLimit: "/threads/{threadId}",
         },
       },
     },
@@ -21,7 +20,6 @@ const routes = (handler) => [
       plugins: {
         rateLimit: {
           enabled: true,
-          pathLimit: "/threads/{threadId}",
         },
       },
     },
