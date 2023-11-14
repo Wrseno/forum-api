@@ -7,6 +7,10 @@ const routes = (handler) => [
       plugins: {
         rateLimit: {
           enabled: true,
+          pathLimit: "/threads/{threadId}",
+          method: "get",
+          max: 90,
+          duration: 60000,
         },
       },
     },
@@ -20,6 +24,10 @@ const routes = (handler) => [
       plugins: {
         rateLimit: {
           enabled: true,
+          pathLimit: "/threads",
+          method: "post",
+          max: 90,
+          duration: 60000,
         },
       },
     },
