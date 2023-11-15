@@ -25,7 +25,7 @@ const createServer = async (container) => {
 
   const rateLimitOpts = {
     enabled: true,
-    pathLimit: 5,
+    pathLimit: 90,
     userLimit: 100,
     userCache: {
       expiresIn: 60000,
