@@ -5,12 +5,13 @@ const routes = (handler) => [
     handler: handler.getThreadByIdHandler,
     options: {
       plugins: {
-        rateLimit: {
+        "hapi-rate-limit": {
           enabled: true,
-          pathLimit: "/threads/{threadId}",
-          method: "get",
-          max: 90,
-          duration: 60000,
+          pathLimit: 90,
+          userLimit: 100,
+          userCache: {
+            expiresIn: 60000,
+          },
         },
       },
     },
@@ -22,12 +23,13 @@ const routes = (handler) => [
     options: {
       auth: "forumapi_jwt",
       plugins: {
-        rateLimit: {
+        "hapi-rate-limit": {
           enabled: true,
-          pathLimit: "/threads",
-          method: "post",
-          max: 90,
-          duration: 60000,
+          pathLimit: 90,
+          userLimit: 100,
+          userCache: {
+            expiresIn: 60000,
+          },
         },
       },
     },

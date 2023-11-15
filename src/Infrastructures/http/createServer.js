@@ -1,4 +1,4 @@
-const {RateLimiterMemory} = require("rate-limiter-flexible");
+const RateLimit = require("hapi-rate-limit");
 
 const Hapi = require("@hapi/hapi");
 const Jwt = require("@hapi/jwt");
@@ -23,9 +23,22 @@ const createServer = async (container) => {
     },
   });
 
+  const rateLimitOpts = {
+    enabled: true,
+    pathLimit: 5,
+    userLimit: 100,
+    userCache: {
+      expiresIn: 60000,
+    },
+  };
+
   await server.register([
     {
       plugin: Jwt,
+    },
+    {
+      plugin: RateLimit,
+      options: rateLimitOpts,
     },
   ]);
 
@@ -79,34 +92,6 @@ const createServer = async (container) => {
       options: {container},
     },
   ]);
-
-  // options untuk penerapan rate limit
-  const opts = {
-    points: 90,
-    duration: 60,
-    blockDuration: 60,
-  };
-
-  const rateLimiter = new RateLimiterMemory(opts);
-
-  server.ext("onPreHandler", async (request, h) => {
-    const key = request.path; // Gunakan path sebagai kunci pembatasan
-
-    try {
-      const result = await rateLimiter.consume(key, 1);
-      if (result.remainingPoints >= 0) {
-        return h.continue;
-      } else {
-        return h
-          .response({status: "fail", message: "Too Many Requests"})
-          .code(429);
-      }
-    } catch (err) {
-      return h
-        .response({status: "fail", message: "Internal Server Error"})
-        .code(500);
-    }
-  });
 
   server.ext("onPreResponse", (request, h) => {
     // mendapatkan konteks response dari request

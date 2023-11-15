@@ -5,6 +5,16 @@ const routes = (handler) => [
     handler: handler.postCommentHandler,
     options: {
       auth: "forumapi_jwt",
+      plugins: {
+        "hapi-rate-limit": {
+          enabled: true,
+          pathLimit: 90,
+          userLimit: 100,
+          userCache: {
+            expiresIn: 60000,
+          },
+        },
+      },
     },
   },
   {
@@ -13,6 +23,16 @@ const routes = (handler) => [
     handler: handler.deleteCommentHandler,
     options: {
       auth: "forumapi_jwt",
+      plugins: {
+        "hapi-rate-limit": {
+          enabled: true,
+          pathLimit: 90,
+          userLimit: 100,
+          userCache: {
+            expiresIn: 60000,
+          },
+        },
+      },
     },
   },
 ];
