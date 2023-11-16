@@ -5,16 +5,16 @@ const routes = (handler) => [
     handler: handler.postReplyHandler,
     options: {
       auth: "forumapi_jwt",
-      plugins: {
-        "hapi-rate-limit": {
-          enabled: true,
-          pathLimit: 10,
-          userLimit: 100,
-          userCache: {
-            expiresIn: 60000,
-          },
-        },
-      },
+      // plugins: {
+      //   "hapi-rate-limit": {
+      //     enabled: true,
+      //     pathLimit: 10,
+      //     userLimit: 100,
+      //     userCache: {
+      //       expiresIn: 60000,
+      //     },
+      //   },
+      // },
     },
   },
   {
@@ -23,16 +23,16 @@ const routes = (handler) => [
     handler: handler.deleteReplyByIdHandler,
     options: {
       auth: "forumapi_jwt",
-      plugins: {
-        "hapi-rate-limit": {
-          enabled: true,
-          pathLimit: 10,
-          userLimit: 100,
-          userCache: {
-            expiresIn: 60000,
-          },
-        },
-      },
+      // plugins: {
+      //   "hapi-rate-limit": {
+      //     enabled: true,
+      //     pathLimit: 10,
+      //     userLimit: 100,
+      //     userCache: {
+      //       expiresIn: 60000,
+      //     },
+      //   },
+      // },
     },
   },
 ];
