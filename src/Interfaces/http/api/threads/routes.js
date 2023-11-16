@@ -7,7 +7,7 @@ const routes = (handler) => [
       plugins: {
         "hapi-rate-limit": {
           enabled: true,
-          pathLimit: 30,
+          pathLimit: 20,
           userLimit: 100,
           userCache: {
             expiresIn: 60000,
@@ -25,7 +25,7 @@ const routes = (handler) => [
       plugins: {
         "hapi-rate-limit": {
           enabled: true,
-          pathLimit: 30,
+          pathLimit: 20,
           userLimit: 100,
           userCache: {
             expiresIn: 60000,
