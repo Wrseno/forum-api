@@ -23,23 +23,13 @@ const createServer = async (container) => {
     },
   });
 
-  // const rateLimitOpts = {
-  //   enabled: true,
-  //   pathLimit: 10,
-  //   userLimit: 100,
-  //   userCache: {
-  //     expiresIn: 60000,
-  //   },
-  // };
-
   await server.register([
     {
       plugin: Jwt,
     },
-    // {
-    //   plugin: RateLimit,
-    //   options: rateLimitOpts,
-    // },
+    {
+      plugin: RateLimit,
+    },
   ]);
 
   server.route({
